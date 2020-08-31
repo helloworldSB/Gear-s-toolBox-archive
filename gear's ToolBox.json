@@ -104,7 +104,6 @@
 			"exclude": "",
 			"group": "gear's ToolBox",
 			"isFunction": false,
-			"code": "val = decodeURIComponent(val)",
 			"action": "redirect",
 			"to": "$1"
 		},
