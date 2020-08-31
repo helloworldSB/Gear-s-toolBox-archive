@@ -104,12 +104,13 @@
 			"exclude": "",
 			"group": "gear's ToolBox",
 			"isFunction": false,
+			"code": "val = decodeURIComponent(val)",
 			"action": "redirect",
 			"to": "$1"
 		},
 		{
 			"enable": true,
-			"name": "MCBBS页面跳转",
+			"name": "MCBBS外链跳转",
 			"ruleType": "redirect",
 			"matchType": "regexp",
 			"pattern": "^https?://www\\.mcbbs\\.net/plugin\\.php\\?.+target=(.*)",
@@ -118,6 +119,31 @@
 			"isFunction": false,
 			"action": "redirect",
 			"to": "$1"
+		},
+		{
+			"enable": true,
+			"name": "MCBBS PHP转HTML",
+			"ruleType": "redirect",
+			"matchType": "regexp",
+			"pattern": "^https?://www\\.mcbbs\\.net/forum\\.php\\?mod=viewthread.*?\\&tid=(\\d+).*?\\&page=(\\d+)([^\\#]*)",
+			"exclude": "",
+			"group": "gear's ToolBox",
+			"isFunction": false,
+			"action": "redirect",
+			"to": "https://www.mcbbs.net/thread-$1-$2-1.html"
+		},
+		{
+			"enable": true,
+			"name": "MCBBS PHP转HTML(无page参数)",
+			"ruleType": "redirect",
+			"matchType": "regexp",
+			"pattern": "^https?://www\\.mcbbs\\.net/forum\\.php\\?mod=viewthread.*?\\&tid=(\\d*).*?([^\\#]*)",
+			"exclude": "^https?://www\\.mcbbs\\.net/forum\\.php\\?mod=viewthread.*?\\&tid=(\\d+).*?\\&page=(\\d+)([^\\#]*)",
+			"group": "gear's ToolBox",
+			"isFunction": false,
+			"action": "redirect",
+			"to": "https://www.mcbbs.net/thread-$1-1-1.html",
+			"_exclude": {}
 		}
 	],
 	"sendHeader": [
