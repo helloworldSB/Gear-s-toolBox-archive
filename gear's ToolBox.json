@@ -156,6 +156,18 @@
 			"isFunction": false,
 			"action": "redirect",
 			"to": "$1"
+		},
+		{
+			"enable": true,
+			"name": "百度搜索多余参数清除",
+			"ruleType": "redirect",
+			"matchType": "regexp",
+			"pattern": "^https?://www\\.baidu\\.com/s\\?.*?wd=([^&]*).*",
+			"exclude": "",
+			"group": "gear's ToolBox",
+			"isFunction": false,
+			"action": "redirect",
+			"to": "https://www.baidu.com/s?wd=$1"
 		}
 	],
 	"sendHeader": [
