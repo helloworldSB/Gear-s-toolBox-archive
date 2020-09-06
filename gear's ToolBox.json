@@ -73,7 +73,7 @@
 		},
 		{
 			"enable": true,
-			"name": "MCBBS个人空间页跳转",
+			"name": "MCBBS个人空间页跳转(a)",
 			"ruleType": "redirect",
 			"matchType": "regexp",
 			"pattern": "^https?://www\\.mcbbs\\.net/home\\.php\\?mod=space\\&uid=(\\d+)$",
@@ -144,6 +144,18 @@
 			"action": "redirect",
 			"to": "https://www.mcbbs.net/thread-$1-1-1.html",
 			"_exclude": {}
+		},
+		{
+			"enable": true,
+			"name": "知乎外链自动跳转",
+			"ruleType": "redirect",
+			"matchType": "regexp",
+			"pattern": "^https?://link\\.zhihu\\.com/\\?target=(.*)",
+			"exclude": "",
+			"group": "gear's ToolBox",
+			"isFunction": false,
+			"action": "redirect",
+			"to": "$1"
 		}
 	],
 	"sendHeader": [
