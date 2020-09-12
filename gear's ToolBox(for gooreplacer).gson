@@ -1,0 +1,111 @@
+{
+  "createBy": "http://liujiacai.net/gooreplacer/",
+  "version": "3.11.1",
+  "createAt": "2020/9/12 下午8:34:43",
+  "redirect-rules": [
+    {
+      "src": "https?://game\\.bilibili\\.com/linkfilter/\\?url=(.*)",
+      "kind": "regexp",
+      "dst": "$1",
+      "enable": true
+    },
+    {
+      "src": "^https?://www\\.baidu\\.com/s\\?.*?wd=([^&]*)&?(pn=\\d*).*",
+      "kind": "regexp",
+      "dst": "https://www.baidu.com/s?wd=$1&$2",
+      "enable": true
+    },
+    {
+      "src": "^https?://link\\.zhihu\\.com/\\?target=(.*)",
+      "kind": "regexp",
+      "dst": "$1",
+      "enable": true
+    },
+    {
+      "src": "^https?://www\\.mcbbs\\.net/forum\\.php\\?mod=viewthread.*?\\&tid=(\\d+).*?\\&page=(\\d+)([^\\#]*)",
+      "kind": "regexp",
+      "dst": "https://www.mcbbs.net/thread-$1-$2-1.html",
+      "enable": true
+    },
+    {
+      "src": "^https?://www\\.mcbbs\\.net/plugin\\.php\\?.+target=(.*)",
+      "kind": "regexp",
+      "dst": "$1",
+      "enable": true
+    },
+    {
+      "src": "https?://www\\da\\.\\w+?\\.pro/pushredirect/\\?.*&dest=(.*)",
+      "kind": "regexp",
+      "dst": "$1",
+      "enable": true
+    },
+    {
+      "src": "https?://adfoc\\.us/serve/sitelinks/\\?id=\\d+\\&url=(\\w+)",
+      "kind": "regexp",
+      "dst": "$1",
+      "enable": true
+    },
+    {
+      "src": "^https?://www\\.mcbbs\\.net/home\\.php\\?mod=space\\&uid=(\\d+)$",
+      "kind": "regexp",
+      "dst": "https://www.mcbbs.net/home.php?mod=space&uid=$1&view=admin",
+      "enable": true
+    },
+    {
+      "src": "^http(s?)://fonts\\.gstatic\\.com/",
+      "kind": "regexp",
+      "dst": "https://gapis.geekzu.org/g-fonts/",
+      "enable": true
+    },
+    {
+      "src": "fonts.googleapis.com",
+      "kind": "wildcard",
+      "dst": "fonts.geekzu.org",
+      "enable": true
+    },
+    {
+      "src": "^http(s?)://(?:www\\.|recaptcha\\.|)google\\.com/recaptcha/(.*)",
+      "kind": "regexp",
+      "dst": "https://recaptcha.net/recaptcha/$2",
+      "enable": true
+    },
+    {
+      "src": "^http(s?)://ajax\\.googleapis\\.com/(.*)",
+      "kind": "regexp",
+      "dst": "https://gapis.geekzu.org/ajax/$2",
+      "enable": true
+    },
+    {
+      "src": "^https?://.*\\.gravatar\\.com/avatar/",
+      "kind": "regexp",
+      "dst": "https://sdn.geekzu.org/avatar/",
+      "enable": true
+    }
+  ],
+  "cancel-rules": [
+    {
+      "src": "apis.google.com",
+      "kind": "wildcard",
+      "enable": true
+    }
+  ],
+  "request-headers": [
+    {
+      "src": "^https?://\\w+\\.baidupcs\\.com/file/.+",
+      "kind": "regexp",
+      "op": "modify",
+      "name": "user-anget",
+      "value": "LogStatistic",
+      "enable": true
+    },
+    {
+      "src": "addons.mozilla.org",
+      "kind": "wildcard",
+      "op": "modify",
+      "name": "user-anget",
+      "value": "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:56.0) Gecko/20100101 Firefox/56.0",
+      "enable": true
+    }
+  ],
+  "response-headers": []
+}
