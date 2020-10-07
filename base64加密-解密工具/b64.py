@@ -1,60 +1,67 @@
-from base64 import b64encode,b64decode
-from binascii import Error as binasciiErr
-from traceback import print_exc
-from os.path import isfile
+class av_bv_cls:
+    def __init__(self):
+        self.table='fZodR9XQDSUm21yCkr6zBqiveYah8bt4xsWpHnJE7jL5VG3guMTKNPAwcF'
+        self.tr={}
+        for i in range(58):
+            self.tr[self.table[i]]=i
+        self.s=[11,10,3,8,4,6]
+        self.xor=177451812
+        self.add=8728348608
+    def dec(self,x):
+	    r=0
+	    for i in range(6):
+		    r+=self.tr[x[self.s[i]]]*58**i
+	    return (r-self.add)^self.xor
+    def enc(self,x):
+	    x=(x^self.xor)+self.add
+	    r=list('BV1  4 1 7  ')
+	    for i in range(6):
+		    r[self.s[i]]=self.table[x//58**i%58]
+	    return ''.join(r)
+from urllib import request,parse
+from json import loads#,dumps
 while True:
-    print('您需要编码还是解码？\n 1.解码 2.编码 (按下Ctrl-X 来结束)\n')
-    control = input()
-    if control == '\x18':break
-    if control == '1':
-        control = input('请输入Base64码\n')
-        ctrl = input('输出到文件还是直接显示？1.输出到控制台 2.输出到文件\n')
-        if ctrl == '1':
-            typer = input('请输入编码方式(如UTF-8等,如果只需要字节可以输入raw\n\
-            输入错误的编码方式将会没有输出)\n')
-            try:
-                result = b64decode(control)
-                if typer == 'raw' or typer == 'RAW':print(result)
-                else:print(result.decode(typer,'ignore'))
-            except binasciiErr:
-                print('您输入的并不是ASCII码！')
-                print_exc()
-        elif ctrl == '2':
-            print('输出到哪个文件？')
-            file_path = input()
-            try:result = b64decode(control)
-            except binasciiErr:
-                print('您输入的并不是ASCII码！')
-                print_exc()
-                continue
-            with open(file_path,'wb') as f:print(result,file = f)
-    elif control == '2':
-        control = input('请问你要输入纯文本还是二进制数据\n\
-        1.纯文本 2.数据流\
-        \n')
-        if control == '1':
-            control = input("请输入文字(默认使用UTF-8编码)\n（注:输出中b'和'框起来的部分才是BASE64码！）\n")
-            print(b64encode(control.encode()))
-        elif control == '2':
-            print('''
-请问您想打开文件还是直接输入？
-1.打开文件 2.直接输入
-            ''')
-            control = input()
-            if control == '1':
-                print('请输入文件名称')
-                control = input()
-                if isfile(control):
-                    with open(control,'rb',True) as f:print(b64encode(f.read()))
-                else:print('文件不存在！请输入正确的文件路径！')
-            elif control == '2':
-                print('请输入字节码')
-                control = input()
-                if ('b' not in control) or ('\'' not in control):print('输入错误！请检查输入的字节码格式！')
-                else:
-                    try:
-                        control = eval(control)
-                        print(control)
-                    except SyntaxError:
-                        print('您的输入出错啦！请检查格式是否正确！')
-                        print_exc()
+    ctrl_num = input(r'''
+您希望采用哪种API？（输入数字）
+1.官方API   2.离线算法
+按 CTRL+C 结束
+''')
+    if ctrl_num == '1' or ctrl_num == '2':
+        video_num = input('''
+请输入视频号
+记得带上av或BV前缀
+''')
+        
+        
+        if video_num[:2] == 'av' or video_num[:2] == 'AV':flag = False
+        elif video_num[:2] == 'BV' or video_num[:2] == 'bv':flag = True
+        if ctrl_num == '1':
+            URL = r'http://api.bilibili.com/x/web-interface/archive/stat?'
+            if flag:URL += r'bvid='
+            else:URL += r'aid='
+            URL += video_num[2:]
+            req = request.Request(URL)
+            req.add_header("User-Agent","Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36(KHTML, like Gecko) Chrome/50.0.2661.87 Safari/537.36")
+            with request.urlopen(req) as f:
+                temp1 = f.read()
+                temp1 = loads(temp1)
+                if temp1['code'] != 0:
+                    print('转换错误！错误代码：',temp1['code'],'错误值：',temp1['message'])
+                    continue
+                print('\n转换成功！')
+                temp2 = temp1['data']
+                print('av号：',temp2['aid'])
+                print('bv号：',temp2['bvid'])
+                print('投币数：',temp2['coin'])
+                print('共被浏览过',temp2['view'],'次')
+                print('共有',temp2['reply'],'个评论')
+                print('点赞数：',temp2['like'])
+                print('收藏数：',temp2['favorite'])
+                print('分享数：',temp2['share'])
+                print(r'授权方式(1代表原创，2代表搬运):',temp2['copyright'])
+                print(r'历史排名：',temp2['his_rank'])
+                print(r'白嫖数：',temp2['view'] - temp2['coin'] - temp2['like'] - temp2['favorite'])
+                print('\n',r'注：白嫖数=观看数-投币人数-点赞人数-收藏人数')
+        elif ctrl_num == '2':
+            if flag:print('av号：av',av_bv_cls().dec(video_num),sep='')
+            else:print('bv号：',av_bv_cls().enc(int(video_num[2:])))
