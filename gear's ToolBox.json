@@ -93,7 +93,7 @@
 			"group": "gear's ToolBox",
 			"isFunction": false,
 			"action": "redirect",
-			"to": "$1"
+			"to": "http://adfoc.us/serve/sitelinks/?id=545355&url=$1"
 		},
 		{
 			"enable": true,
