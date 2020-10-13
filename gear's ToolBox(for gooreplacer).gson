@@ -42,7 +42,7 @@
     {
       "src": "https?://adfoc\\.us/serve/sitelinks/\\?id=\\d+\\&url=(\\w+)",
       "kind": "regexp",
-      "dst": "http://adfoc.us/serve/sitelinks/?id=545355&url=$1",
+      "dst": "http://adf.ly/23831561/$1",
       "enable": true
     },
     {
