@@ -100,7 +100,7 @@
 			"name": "AdFly跳过广告",
 			"ruleType": "redirect",
 			"matchType": "regexp",
-			"pattern": "https?://www\\da\\.\\w+?\\.pro/pushredirect/\\?.*&dest=(.*)",
+			"pattern": "https?://www\\d+a\\.\\w+?\\.pro/pushredirect/\\?.*&dest=(.*)",
 			"exclude": "",
 			"group": "gear's ToolBox",
 			"isFunction": false,

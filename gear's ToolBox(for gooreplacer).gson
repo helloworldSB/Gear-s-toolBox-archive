@@ -34,7 +34,7 @@
       "enable": true
     },
     {
-      "src": "https?://www\\da\\.\\w+?\\.pro/pushredirect/\\?.*&dest=(.*)",
+      "src": "https?://www\\da+\\.\\w+?\\.pro/pushredirect/\\?.*&dest=(.*)",
       "kind": "regexp",
       "dst": "$1",
       "enable": true
